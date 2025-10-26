@@ -114,6 +114,16 @@ Pastikan semua teks dalam bahasa Indonesia yang natural dan relevan untuk kontek
   });
 
   // Simulation CRUD
+  app.get("/api/simulations", async (req, res) => {
+    try {
+      const simulations = await storage.getAllSimulations();
+      res.json(simulations);
+    } catch (error) {
+      console.error("Error fetching all simulations:", error);
+      res.status(500).json({ error: "Failed to fetch simulations" });
+    }
+  });
+
   app.post("/api/simulations", async (req, res) => {
     try {
       const simulationData = insertSimulationSchema.parse(req.body);

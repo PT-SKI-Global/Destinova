@@ -27,6 +27,7 @@ export interface IStorage {
   updateProfile(userId: string, profile: Partial<InsertProfile>): Promise<Profile>;
 
   // Simulation operations
+  getAllSimulations(): Promise<Simulation[]>;
   getSimulation(id: string): Promise<Simulation | undefined>;
   getSimulationsByUser(userId: string): Promise<Simulation[]>;
   createSimulation(simulation: InsertSimulation): Promise<Simulation>;
@@ -82,6 +83,14 @@ export class DatabaseStorage implements IStorage {
   }
 
   // Simulation operations
+  async getAllSimulations(): Promise<Simulation[]> {
+    return await db
+      .select()
+      .from(simulations)
+      .orderBy(desc(simulations.createdAt))
+      .limit(100);
+  }
+
   async getSimulation(id: string): Promise<Simulation | undefined> {
     const [simulation] = await db.select().from(simulations).where(eq(simulations.id, id));
     return simulation || undefined;

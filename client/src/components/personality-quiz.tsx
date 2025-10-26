@@ -89,6 +89,11 @@ export function PersonalityQuiz() {
 
         const data = await response.json();
         setResult(data);
+        
+        // Store personality type in localStorage for later use
+        localStorage.setItem("userPersonalityType", data.mbtiType);
+        localStorage.setItem("userPersonalityData", JSON.stringify(data));
+        
         setShowResult(true);
       } catch (error) {
         console.error("Error calculating personality:", error);
