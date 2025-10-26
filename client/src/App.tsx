@@ -9,6 +9,7 @@ import Home from "@/pages/home";
 import Simulation from "@/pages/simulation";
 import Results from "@/pages/results";
 import Comparison from "@/pages/comparison";
+import Privacy from "@/pages/privacy";
 
 function Router() {
   return (
@@ -17,6 +18,7 @@ function Router() {
       <Route path="/simulation" component={Simulation} />
       <Route path="/results" component={Results} />
       <Route path="/comparison" component={Comparison} />
+      <Route path="/privacy" component={Privacy} />
       <Route component={NotFound} />
     </Switch>
   );

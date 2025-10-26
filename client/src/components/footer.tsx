@@ -14,6 +14,12 @@ export function Footer() {
             <p className="text-sm text-muted-foreground leading-relaxed">
               Platform simulasi keputusan karier dan pendidikan dengan AI untuk Indonesia.
             </p>
+            <div className="pt-2 space-y-1">
+              <p className="text-xs font-semibold text-foreground">PT. Sentra Karya Integrasi Global</p>
+              <Link href="/privacy" className="text-xs text-muted-foreground hover:text-foreground block">
+                Privasi
+              </Link>
+            </div>
           </div>
 
           <div>
@@ -76,7 +82,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 pt-8 border-t text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} Destinova. Hak cipta dilindungi.</p>
+          <p>&copy; 2025 PT. Sentra Karya Integrasi Global. Hak cipta dilindungi.</p>
         </div>
       </div>
     </footer>
