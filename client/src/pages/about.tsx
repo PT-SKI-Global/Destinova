@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Building2, Target, Users, Award, Mail, Phone, MapPin } from "lucide-react";
+import { Building2, Target, Users, Award, Mail, Phone, MapPin, BookOpen, Printer, TrendingUp, Film, Package, Cpu, Radio, Sprout, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function About() {
@@ -8,152 +8,200 @@ export default function About() {
       {/* Hero Section */}
       <div className="bg-gradient-to-br from-primary/10 via-background to-background border-b">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 py-16 md:py-24">
-          <div className="max-w-3xl">
+          <div className="max-w-4xl">
             <div className="flex items-center gap-3 mb-6">
               <Building2 className="h-12 w-12 text-primary" />
               <h1 className="text-4xl md:text-5xl font-bold">
                 PT. Sentra Karya Integrasi Global
               </h1>
             </div>
-            <p className="text-xl text-muted-foreground leading-relaxed">
-              Mitra terpercaya dalam solusi teknologi dan pengembangan karier untuk Indonesia
+            <p className="text-2xl font-semibold mb-4">
+              Integrating Innovation for a Better Future
+            </p>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              Mewujudkan sinergi antar bidang untuk membangun masa depan yang lebih berdaya. 
+              Kami percaya, setiap ide punya potensi besar. Saat ide-ide itu saling terhubung, 
+              lahirlah inovasi yang menciptakan terobosan produk.
+            </p>
+            <p className="text-lg text-muted-foreground leading-relaxed mt-4">
+              Itulah makna <span className="font-semibold text-foreground">"Integrating Innovation"</span>.
             </p>
           </div>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 py-16">
-        {/* Company Overview */}
+        {/* Core Values */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold mb-6">Tentang Kami</h2>
-          <div className="prose prose-lg max-w-none text-muted-foreground">
-            <p className="text-lg leading-relaxed mb-4">
-              PT. Sentra Karya Integrasi Global (PT SKI Global) adalah perusahaan yang berkomitmen untuk memberikan 
-              solusi inovatif dalam pengembangan sumber daya manusia dan teknologi di Indonesia. Kami berfokus pada 
-              pemberdayaan generasi muda melalui platform digital yang membantu mereka membuat keputusan karier dan 
-              pendidikan yang lebih baik.
-            </p>
-            <p className="text-lg leading-relaxed">
-              Dengan memanfaatkan teknologi AI dan data analytics, kami menghadirkan Destinova - platform simulasi 
-              keputusan karier yang membantu pengguna memvisualisasikan berbagai jalur karier, memahami potensi diri, 
-              dan merencanakan masa depan dengan lebih percaya diri.
-            </p>
+          <h2 className="text-3xl font-bold mb-4">Nilai Inti (Core Values)</h2>
+          <p className="text-xl text-center mb-8">
+            🌟 <span className="font-semibold">Kolaborasi. Berkarya. Pemberdayaan. Keberlanjutan.</span>
+          </p>
+          <p className="text-lg text-muted-foreground text-center max-w-3xl mx-auto mb-12">
+            Empat pilar utama yang menjadi dasar langkah kami dalam setiap bidang bisnis.
+          </p>
+
+          <div className="grid md:grid-cols-4 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-xl text-center">Kolaborasi</CardTitle>
+              </CardHeader>
+              <CardContent className="text-muted-foreground text-center">
+                <p>
+                  Membangun kemitraan strategis dan sinergi antar bidang untuk menciptakan dampak yang lebih besar.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-xl text-center">Berkarya</CardTitle>
+              </CardHeader>
+              <CardContent className="text-muted-foreground text-center">
+                <p>
+                  Menghasilkan produk dan layanan berkualitas tinggi yang memberikan nilai nyata bagi pelanggan.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-xl text-center">Pemberdayaan</CardTitle>
+              </CardHeader>
+              <CardContent className="text-muted-foreground text-center">
+                <p>
+                  Memberikan tools dan knowledge untuk mengembangkan potensi individu dan organisasi.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-xl text-center">Keberlanjutan</CardTitle>
+              </CardHeader>
+              <CardContent className="text-muted-foreground text-center">
+                <p>
+                  Membangun bisnis yang bertanggung jawab dan berkelanjutan untuk masa depan yang lebih baik.
+                </p>
+              </CardContent>
+            </Card>
           </div>
         </div>
 
-        {/* Vision & Mission */}
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
-          <Card>
-            <CardHeader>
-              <div className="flex items-center gap-3 mb-2">
-                <Target className="h-6 w-6 text-primary" />
-                <CardTitle className="text-2xl">Visi Kami</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="text-muted-foreground space-y-4">
-              <p className="leading-relaxed">
-                Menjadi perusahaan terdepan dalam penyediaan solusi teknologi untuk pengembangan karier dan 
-                pendidikan di Indonesia, membantu jutaan individu mencapai potensi maksimal mereka.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <div className="flex items-center gap-3 mb-2">
-                <Award className="h-6 w-6 text-primary" />
-                <CardTitle className="text-2xl">Misi Kami</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="text-muted-foreground">
-              <ul className="space-y-3">
-                <li className="flex gap-2">
-                  <span className="text-primary mt-1">•</span>
-                  <span>Mengembangkan platform teknologi yang mudah diakses dan bermanfaat</span>
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-primary mt-1">•</span>
-                  <span>Memberikan insights berbasis data untuk keputusan karier yang lebih baik</span>
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-primary mt-1">•</span>
-                  <span>Memberdayakan generasi muda Indonesia dengan tools dan knowledge yang tepat</span>
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-primary mt-1">•</span>
-                  <span>Berkontribusi pada peningkatan kualitas SDM Indonesia</span>
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Core Values */}
+        {/* Empat Pilar Bisnis */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold mb-8">Nilai-Nilai Kami</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            <Card>
+          <h2 className="text-3xl font-bold mb-4 text-center">Empat Pilar Bisnis</h2>
+          <p className="text-lg text-muted-foreground text-center max-w-3xl mx-auto mb-12">
+            Integrasi (4) bidang, (1) visi. Kami menghubungkan dunia kreatif, teknologi, dan pertanian.
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Penerbitan, Percetakan & Konsultan Manajemen */}
+            <Card className="border-purple-500/20">
               <CardHeader>
-                <CardTitle className="text-xl">Inovasi</CardTitle>
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="p-2 rounded-lg bg-purple-500/10">
+                    <BookOpen className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+                  </div>
+                  <CardTitle className="text-xl">Penerbitan, Percetakan & Konsultan Manajemen</CardTitle>
+                </div>
               </CardHeader>
-              <CardContent className="text-muted-foreground">
-                <p>
-                  Terus berinovasi menggunakan teknologi terkini untuk memberikan solusi terbaik bagi pengguna kami.
+              <CardContent className="space-y-4">
+                <div className="flex gap-2 text-muted-foreground">
+                  <Printer className="h-5 w-5 text-purple-600 dark:text-purple-400 flex-shrink-0 mt-0.5" />
+                  <p className="font-semibold text-foreground">
+                    📚 Dari ide menjadi inspirasi, dari konsep menjadi karya nyata.
+                  </p>
+                </div>
+                <p className="text-muted-foreground">
+                  Kami bukan hanya mencetak — kami menginspirasi.
+                </p>
+                <p className="text-muted-foreground">
+                  Melalui penerbitan dan konsultan manajemen, kami membantu individu dan perusahaan membangun citra, 
+                  strategi, dan nilai yang berdampak.
                 </p>
               </CardContent>
             </Card>
 
-            <Card>
+            {/* Multimedia & Packaging */}
+            <Card className="border-slate-400/20">
               <CardHeader>
-                <CardTitle className="text-xl">Integritas</CardTitle>
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800">
+                    <Film className="h-6 w-6 text-slate-600 dark:text-slate-400" />
+                  </div>
+                  <CardTitle className="text-xl">Multimedia & Produk Packaging</CardTitle>
+                </div>
               </CardHeader>
-              <CardContent className="text-muted-foreground">
-                <p>
-                  Berkomitmen pada transparansi, kejujuran, dan etika bisnis yang tinggi dalam setiap aspek layanan kami.
+              <CardContent className="space-y-4">
+                <div className="flex gap-2 text-muted-foreground">
+                  <Package className="h-5 w-5 text-slate-600 dark:text-slate-400 flex-shrink-0 mt-0.5" />
+                  <p className="font-semibold text-foreground">
+                    🎬 Desain, animasi, dan kemasan kreatif yang bercerita.
+                  </p>
+                </div>
+                <p className="text-muted-foreground">
+                  Kami menciptakan visual yang kuat untuk memperkuat identitas brand Anda.
+                </p>
+                <p className="text-muted-foreground">
+                  Karena kemasan yang baik bukan hanya membungkus produk, tapi menghidupkan makna di baliknya.
                 </p>
               </CardContent>
             </Card>
 
-            <Card>
+            {/* Teknologi & Telematika */}
+            <Card className="border-blue-500/20">
               <CardHeader>
-                <CardTitle className="text-xl">Pemberdayaan</CardTitle>
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="p-2 rounded-lg bg-blue-500/10">
+                    <Cpu className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                  </div>
+                  <CardTitle className="text-xl">Teknologi & Telematika</CardTitle>
+                </div>
               </CardHeader>
-              <CardContent className="text-muted-foreground">
-                <p>
-                  Fokus pada pemberdayaan individu dengan memberikan tools, insights, dan dukungan yang mereka butuhkan.
+              <CardContent className="space-y-4">
+                <div className="flex gap-2 text-muted-foreground">
+                  <Radio className="h-5 w-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+                  <p className="font-semibold text-foreground">
+                    💻 Solusi digital yang menghubungkan ide, data, dan manusia.
+                  </p>
+                </div>
+                <p className="text-muted-foreground">
+                  Inovasi kami bergerak dari sistem informasi hingga jaringan komunikasi terpadu.
+                </p>
+                <p className="text-muted-foreground">
+                  Mewujudkan dunia yang lebih efisien dan terkoneksi.
                 </p>
               </CardContent>
             </Card>
 
-            <Card>
+            {/* Agrobisnis & Export */}
+            <Card className="border-green-500/20">
               <CardHeader>
-                <CardTitle className="text-xl">Kolaborasi</CardTitle>
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="p-2 rounded-lg bg-green-500/10">
+                    <Sprout className="h-6 w-6 text-green-600 dark:text-green-400" />
+                  </div>
+                  <CardTitle className="text-xl">Agrobisnis & Export</CardTitle>
+                </div>
               </CardHeader>
-              <CardContent className="text-muted-foreground">
-                <p>
-                  Membangun kemitraan strategis dan bekerja sama dengan berbagai stakeholder untuk dampak yang lebih luas.
+              <CardContent className="space-y-4">
+                <div className="flex gap-2 text-muted-foreground">
+                  <Globe className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                  <p className="font-semibold text-foreground">
+                    🌾 Masa depan bangsa tumbuh dari tanah yang diberdayakan.
+                  </p>
+                </div>
+                <p className="text-muted-foreground">
+                  Melalui inovasi, riset, dan kemitraan strategis, kami membangun rantai pasok agrobisnis modern yang 
+                  siap berkompetisi di pasar internasional.
                 </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-xl">Aksesibilitas</CardTitle>
-              </CardHeader>
-              <CardContent className="text-muted-foreground">
-                <p>
-                  Memastikan layanan kami dapat diakses oleh semua kalangan dengan interface yang user-friendly.
+                <p className="text-muted-foreground">
+                  Dari hasil bumi lokal hingga produk turunan bernilai tinggi, kami hadir untuk menghubungkan potensi 
+                  Indonesia dengan dunia.
                 </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-xl">Dampak Sosial</CardTitle>
-              </CardHeader>
-              <CardContent className="text-muted-foreground">
-                <p>
-                  Berkomitmen memberikan kontribusi positif bagi pengembangan sumber daya manusia Indonesia.
+                <p className="text-sm text-muted-foreground italic">
+                  Visi kami: menciptakan ekosistem agrobisnis yang produktif, berkelanjutan, dan mendunia.
                 </p>
               </CardContent>
             </Card>
