@@ -11,6 +11,7 @@ import Results from "@/pages/results";
 import Comparison from "@/pages/comparison";
 import Privacy from "@/pages/privacy";
 import About from "@/pages/about";
+import Terms from "@/pages/terms";
 
 function Router() {
   return (
@@ -21,6 +22,7 @@ function Router() {
       <Route path="/comparison" component={Comparison} />
       <Route path="/privacy" component={Privacy} />
       <Route path="/about" component={About} />
+      <Route path="/terms" component={Terms} />
       <Route component={NotFound} />
     </Switch>
   );
