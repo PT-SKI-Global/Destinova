@@ -2,7 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import openai from "./openai";
-import { calculateMBTI, getCareerCompatibility, type QuizAnswer } from "./personality";
+import { calculateMBTI, getCareerCompatibility, calculateProPsych, type QuizAnswer } from "./personality";
 import { insertSimulationSchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -20,6 +20,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error calculating personality:", error);
       res.status(500).json({ error: "Failed to calculate personality type" });
+    }
+  });
+
+  // Pro Psikotes - Recession-focused career analysis
+  app.post("/api/personality/pro", async (req, res) => {
+    try {
+      const { mbtiType } = req.body as { mbtiType: string };
+      
+      if (!mbtiType || typeof mbtiType !== 'string' || mbtiType.length !== 4) {
+        return res.status(400).json({ error: "Invalid MBTI type" });
+      }
+
+      const result = calculateProPsych(mbtiType);
+      res.json(result);
+    } catch (error) {
+      console.error("Error generating Pro Psych result:", error);
+      res.status(500).json({ error: "Failed to generate Pro Psych analysis" });
     }
   });
 

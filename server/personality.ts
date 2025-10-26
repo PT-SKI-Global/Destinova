@@ -33,16 +33,47 @@ export interface JungianFunctions {
   };
 }
 
+export interface RecessionProofCareer {
+  title: string;
+  fitScore: number;
+  recessionResistance: number; // 1-100
+  reason: string;
+  avgSalary: string;
+  demandTrend: "Tinggi" | "Stabil" | "Menurun";
+  remoteWorkable: boolean;
+}
+
+export interface CostEffectiveSkill {
+  skill: string;
+  learningCost: "Gratis" | "Rendah" | "Menengah";
+  timeToLearn: string;
+  roi: number; // Return on Investment 1-100
+  resources: string[];
+}
+
+export interface SideHustleRecommendation {
+  title: string;
+  fitScore: number;
+  potentialIncome: string;
+  startupCost: "Minimal" | "Rendah" | "Menengah";
+  timeCommitment: string;
+  whyGoodFit: string;
+}
+
 export interface ProPsychResult extends PersonalityResult {
   jungianFunctions: JungianFunctions;
   enneagram: EnneagramResult;
-  careerMatches: Array<{
-    title: string;
-    fitScore: number;
-    reason: string;
-  }>;
+  
+  // Recession-focused analysis
+  recessionProofCareers: RecessionProofCareer[];
+  costEffectiveSkills: CostEffectiveSkill[];
+  sideHustles: SideHustleRecommendation[];
+  
+  // Additional insights
   preferredWorkEnvironment: string[];
   communicationStyle: string;
+  incomeOptimizationStrategy: string;
+  budgetFriendlyPath: string;
 }
 
 // MBTI type mapping based on quiz answers
@@ -170,12 +201,20 @@ export function calculateMBTI(answers: QuizAnswer[]): PersonalityResult {
     }
   });
 
+  // Debug logging
+  console.log("MBTI Calculation - Scores:", {
+    E_score, I_score, S_score, N_score, T_score, F_score, J_score, P_score,
+    answers: answers.map(a => ({ dimension: a.dimension, value: a.value }))
+  });
+
   // Determine MBTI type based on highest scores
   const mbti = 
     (E_score > I_score ? "E" : "I") +
     (N_score > S_score ? "N" : "S") +
     (T_score > F_score ? "T" : "F") +
     (J_score > P_score ? "J" : "P");
+  
+  console.log("MBTI Result:", mbti);
 
   return MBTI_TYPES[mbti] || MBTI_TYPES["INTJ"];
 }
@@ -468,40 +507,267 @@ export function calculateProPsych(mbtiType: string): ProPsychResult {
   const jungianFunctions = getJungianFunctions(mbtiType);
   const enneagram = calculateEnneagram(mbtiType);
   
-  // Enhanced career matches with reasoning
-  const careerMatches = basicResult.careerFit.slice(0, 5).map((career, idx) => ({
-    title: career,
-    fitScore: 90 - (idx * 5),
-    reason: idx === 0 
-      ? `Perfect match dengan ${jungianFunctions.dominant} dan ${enneagram.description.split(' - ')[0]} traits`
-      : `Strong fit dengan MBTI ${mbtiType} preferences`
-  }));
+  // RECESSION-PROOF CAREERS based on personality
+  const recessionProofCareers: RecessionProofCareer[] = [];
   
-  // Work environment preferences based on MBTI
+  // Tech careers (high recession resistance)
+  if (mbtiType.startsWith("INT") || mbtiType.startsWith("IST")) {
+    recessionProofCareers.push({
+      title: "Data Analyst / Data Scientist",
+      fitScore: 92,
+      recessionResistance: 95,
+      reason: "Analytical mindset cocok untuk data-driven decisions. Demand tinggi di era digital.",
+      avgSalary: "Rp 8-15 juta/bulan",
+      demandTrend: "Tinggi",
+      remoteWorkable: true
+    });
+  }
+  
+  if (mbtiType[2] === 'T') {
+    recessionProofCareers.push({
+      title: "IT Support / Cybersecurity Specialist",
+      fitScore: 88,
+      recessionResistance: 90,
+      reason: "Bisnis selalu butuh IT support. Critical infrastructure tidak bisa dipotong saat resesi.",
+      avgSalary: "Rp 6-12 juta/bulan",
+      demandTrend: "Tinggi",
+      remoteWorkable: true
+    });
+  }
+  
+  // Healthcare (recession-proof)
+  if (mbtiType[2] === 'F' || mbtiType.includes("SF")) {
+    recessionProofCareers.push({
+      title: "Healthcare Worker / Perawat",
+      fitScore: 85,
+      recessionResistance: 98,
+      reason: "Kesehatan selalu dibutuhkan. Empati Anda cocok untuk patient care.",
+      avgSalary: "Rp 5-10 juta/bulan",
+      demandTrend: "Stabil",
+      remoteWorkable: false
+    });
+  }
+  
+  // Digital Marketing (cost-effective to start)
+  if (mbtiType[0] === 'E' || mbtiType[1] === 'N') {
+    recessionProofCareers.push({
+      title: "Digital Marketing Specialist",
+      fitScore: 87,
+      recessionResistance: 80,
+      reason: "Bisnis tetap butuh marketing bahkan saat resesi. Kreativitas dan people skills Anda cocok.",
+      avgSalary: "Rp 6-12 juta/bulan",
+      demandTrend: "Tinggi",
+      remoteWorkable: true
+    });
+  }
+  
+  // Accounting (always needed)
+  if (mbtiType.includes("STJ") || mbtiType.includes("IST")) {
+    recessionProofCareers.push({
+      title: "Accounting / Financial Analyst",
+      fitScore: 90,
+      recessionResistance: 92,
+      reason: "Detail-oriented dan terstruktur. Setiap bisnis butuh akuntan, terutama saat resesi untuk cost control.",
+      avgSalary: "Rp 7-14 juta/bulan",
+      demandTrend: "Stabil",
+      remoteWorkable: true
+    });
+  }
+  
+  // Ensure minimum 3 recession-proof careers for ALL MBTI types
+  const fallbackCareers: RecessionProofCareer[] = [
+    {
+      title: "Content Creator / UX Writer",
+      fitScore: 82,
+      recessionResistance: 75,
+      reason: "Biaya rendah untuk start, fleksibel, dan demand tinggi untuk konten digital.",
+      avgSalary: "Rp 5-10 juta/bulan",
+      demandTrend: "Tinggi",
+      remoteWorkable: true
+    },
+    {
+      title: "Customer Service / Support Specialist",
+      fitScore: 80,
+      recessionResistance: 85,
+      reason: "Selalu dibutuhkan untuk retain customers. Bisa remote, skill interpersonal penting.",
+      avgSalary: "Rp 4-8 juta/bulan",
+      demandTrend: "Stabil",
+      remoteWorkable: true
+    },
+    {
+      title: "Admin / Operations Assistant",
+      fitScore: 78,
+      recessionResistance: 82,
+      reason: "Bisnis tetap butuh operasional support. Entry barrier rendah, bisa scale ke management.",
+      avgSalary: "Rp 5-9 juta/bulan",
+      demandTrend: "Stabil",
+      remoteWorkable: false
+    }
+  ];
+  
+  while (recessionProofCareers.length < 3) {
+    recessionProofCareers.push(fallbackCareers[recessionProofCareers.length]);
+  }
+  
+  // COST-EFFECTIVE SKILLS with high ROI
+  const costEffectiveSkills: CostEffectiveSkill[] = [
+    {
+      skill: "Excel & Google Sheets Advanced",
+      learningCost: "Gratis",
+      timeToLearn: "2-3 bulan",
+      roi: 85,
+      resources: ["YouTube (Fran Lab)", "ExcelIsFun", "Google Skillshop"]
+    },
+    {
+      skill: "SQL & Database Basics",
+      learningCost: "Gratis",
+      timeToLearn: "1-2 bulan",
+      roi: 90,
+      resources: ["SQLBolt", "W3Schools", "Khan Academy"]
+    },
+    {
+      skill: "Digital Marketing (SEO/SEM)",
+      learningCost: "Gratis",
+      timeToLearn: "2-4 bulan",
+      roi: 88,
+      resources: ["Google Digital Garage", "HubSpot Academy", "Moz Beginner Guide"]
+    }
+  ];
+  
+  // Add personality-specific skills
+  if (mbtiType[1] === 'N') {
+    costEffectiveSkills.push({
+      skill: "UI/UX Design Fundamentals",
+      learningCost: "Gratis",
+      timeToLearn: "3-4 bulan",
+      roi: 92,
+      resources: ["Google UX Design Certificate (Coursera)", "Figma YouTube Channel"]
+    });
+  }
+  
+  if (mbtiType[2] === 'T') {
+    costEffectiveSkills.push({
+      skill: "Python Programming",
+      learningCost: "Gratis",
+      timeToLearn: "3-5 bulan",
+      roi: 95,
+      resources: ["freeCodeCamp", "Python.org Tutorial", "Automate the Boring Stuff"]
+    });
+  }
+  
+  // SIDE HUSTLES based on personality
+  const sideHustles: SideHustleRecommendation[] = [];
+  
+  if (mbtiType[2] === 'T') {
+    sideHustles.push({
+      title: "Freelance Data Entry / Virtual Assistant",
+      fitScore: 85,
+      potentialIncome: "Rp 2-5 juta/bulan",
+      startupCost: "Minimal",
+      timeCommitment: "10-15 jam/minggu",
+      whyGoodFit: "Sistematis dan detail-oriented. Bisa dikerjakan remote dengan modal laptop saja."
+    });
+  }
+  
+  if (mbtiType[1] === 'N' || mbtiType[2] === 'F') {
+    sideHustles.push({
+      title: "Content Writing / Copywriting",
+      fitScore: 88,
+      potentialIncome: "Rp 3-8 juta/bulan",
+      startupCost: "Minimal",
+      timeCommitment: "12-20 jam/minggu",
+      whyGoodFit: "Kreativitas dan empati Anda cocok untuk storytelling. Demand tinggi untuk konten."
+    });
+  }
+  
+  if (mbtiType[0] === 'E') {
+    sideHustles.push({
+      title: "Online Teaching / Tutoring",
+      fitScore: 90,
+      potentialIncome: "Rp 4-10 juta/bulan",
+      startupCost: "Rendah",
+      timeCommitment: "10-20 jam/minggu",
+      whyGoodFit: "People skills Anda cocok untuk mengajar. Platform seperti Ruangguru, Zenius membayar kompetitif."
+    });
+  }
+  
+  // Universal side hustles - ensure minimum 3 for ALL MBTI types
+  const universalSideHustles: SideHustleRecommendation[] = [
+    {
+      title: "Social Media Management",
+      fitScore: 80,
+      potentialIncome: "Rp 2-6 juta/bulan per client",
+      startupCost: "Minimal",
+      timeCommitment: "8-15 jam/minggu",
+      whyGoodFit: "Skill yang bisa dipelajari cepat. UMKM banyak butuh ini tapi budget terbatas."
+    },
+    {
+      title: "Freelance Translation / Proofreading",
+      fitScore: 78,
+      potentialIncome: "Rp 2-5 juta/bulan",
+      startupCost: "Minimal",
+      timeCommitment: "10-15 jam/minggu",
+      whyGoodFit: "Fleksibel, bisa dikerjakan kapan saja. Demand tinggi untuk English-Indonesian translation."
+    },
+    {
+      title: "Online Reselling / Dropshipping",
+      fitScore: 75,
+      potentialIncome: "Rp 3-8 juta/bulan",
+      startupCost: "Rendah",
+      timeCommitment: "15-25 jam/minggu",
+      whyGoodFit: "E-commerce terus tumbuh. Modal kecil, bisa dimulai sambil kerja full-time."
+    }
+  ];
+  
+  for (const hustle of universalSideHustles) {
+    if (sideHustles.length >= 3) break;
+    sideHustles.push(hustle);
+  }
+  
+  // Work environment preferences
   const preferredWorkEnvironment: string[] = [];
   if (mbtiType[0] === 'E') preferredWorkEnvironment.push("Kolaborasi tim aktif");
-  else preferredWorkEnvironment.push("Fokus mendalam individual");
+  else preferredWorkEnvironment.push("Deep work dengan interupsi minimal");
   
-  if (mbtiType[1] === 'N') preferredWorkEnvironment.push("Inovasi dan eksplorasi");
-  else preferredWorkEnvironment.push("Prosedur jelas dan terstruktur");
+  if (mbtiType[1] === 'N') preferredWorkEnvironment.push("Inovasi dan problem-solving kreatif");
+  else preferredWorkEnvironment.push("Prosedur jelas dengan hasil terukur");
   
-  if (mbtiType[3] === 'J') preferredWorkEnvironment.push("Deadline dan planning yang jelas");
-  else preferredWorkEnvironment.push("Fleksibilitas dan adaptasi");
+  if (mbtiType[3] === 'J') preferredWorkEnvironment.push("Struktur waktu yang teratur");
+  else preferredWorkEnvironment.push("Fleksibilitas dan variety");
   
   // Communication style
   let communicationStyle = "";
   if (mbtiType[2] === 'T') {
-    communicationStyle = "Direct, logical, dan to-the-point. Fokus pada fakta dan solusi efisien.";
+    communicationStyle = "Direct, data-driven, to-the-point. Efektif untuk negoisasi salary dan career advancement.";
   } else {
-    communicationStyle = "Empathetic, diplomatis, dan memperhatikan perasaan. Fokus pada harmoni dan dampak personal.";
+    communicationStyle = "Empathetic, collaborative. Cocok untuk networking dan building relationships.";
   }
+  
+  // Income optimization strategy
+  let incomeOptimizationStrategy = "";
+  if (mbtiType[3] === 'J') {
+    incomeOptimizationStrategy = "Fokus pada satu skill sampai expert (T-shaped), lalu diversifikasi. Build systematic passive income streams.";
+  } else {
+    incomeOptimizationStrategy = "Multi-skill approach. Combine freelance projects dengan main job. Eksperimen berbagai income streams untuk find best fit.";
+  }
+  
+  // Budget-friendly path
+  let budgetFriendlyPath = `1. Mulai dengan skill gratis ROI tinggi (${costEffectiveSkills[0].skill}). 
+2. Ambil freelance project kecil untuk portfolio. 
+3. Build online presence (LinkedIn + portofolio). 
+4. Scale up dengan certification murah jika ROI jelas. 
+5. Parallel: Start side hustle ${sideHustles[0].title} untuk income boost.`;
   
   return {
     ...basicResult,
     jungianFunctions,
     enneagram,
-    careerMatches,
+    recessionProofCareers,
+    costEffectiveSkills,
+    sideHustles,
     preferredWorkEnvironment,
-    communicationStyle
+    communicationStyle,
+    incomeOptimizationStrategy,
+    budgetFriendlyPath
   };
 }
