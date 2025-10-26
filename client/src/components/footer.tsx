@@ -57,9 +57,15 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-sm text-muted-foreground hover:text-foreground">
+                <a 
+                  href="https://wa.me/6285117076160" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-sm text-muted-foreground hover:text-foreground"
+                  data-testid="link-whatsapp-contact"
+                >
                   Kontak
-                </Link>
+                </a>
               </li>
             </ul>
           </div>
