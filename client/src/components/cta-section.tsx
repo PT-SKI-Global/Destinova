@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { Link } from "wouter";
 
 const benefits = [
   "Simulasi AI unlimited untuk jalur karier",
@@ -32,13 +33,17 @@ export function CTASection() {
                   ))}
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                  <Button size="lg" data-testid="button-cta-start">
-                    Mulai Sekarang Gratis
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                  <Button size="lg" variant="outline" data-testid="button-cta-demo">
-                    Lihat Demo
-                  </Button>
+                  <Link href="/simulation">
+                    <Button size="lg" data-testid="button-cta-start" className="w-full sm:w-auto">
+                      Mulai Sekarang Gratis
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  </Link>
+                  <Link href="/simulation">
+                    <Button size="lg" variant="outline" data-testid="button-cta-demo" className="w-full sm:w-auto">
+                      Lihat Demo
+                    </Button>
+                  </Link>
                 </div>
               </div>
               <div className="hidden md:block">

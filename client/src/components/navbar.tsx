@@ -14,17 +14,14 @@ export function Navbar() {
           </Link>
 
           <nav className="hidden md:flex items-center gap-6">
-            <Link href="/" className="text-sm font-medium hover-elevate active-elevate-2 px-3 py-2 rounded-lg">
+            <Link href="/" className="text-sm font-medium hover-elevate active-elevate-2 px-3 py-2 rounded-lg" data-testid="link-home">
               Beranda
             </Link>
-            <Link href="/features" className="text-sm font-medium hover-elevate active-elevate-2 px-3 py-2 rounded-lg">
-              Fitur
+            <Link href="/simulation" className="text-sm font-medium hover-elevate active-elevate-2 px-3 py-2 rounded-lg" data-testid="link-simulation">
+              Simulasi
             </Link>
-            <Link href="/pricing" className="text-sm font-medium hover-elevate active-elevate-2 px-3 py-2 rounded-lg">
-              Harga
-            </Link>
-            <Link href="/about" className="text-sm font-medium hover-elevate active-elevate-2 px-3 py-2 rounded-lg">
-              Tentang
+            <Link href="/comparison" className="text-sm font-medium hover-elevate active-elevate-2 px-3 py-2 rounded-lg" data-testid="link-comparison">
+              Perbandingan
             </Link>
           </nav>
 
@@ -33,9 +30,11 @@ export function Navbar() {
             <Button variant="ghost" className="md:hidden" size="icon" data-testid="button-menu">
               <Menu className="h-5 w-5" />
             </Button>
-            <Button className="hidden md:inline-flex" data-testid="button-nav-login">
-              Masuk
-            </Button>
+            <Link href="/simulation">
+              <Button className="hidden md:inline-flex" data-testid="button-nav-login">
+                Mulai Gratis
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

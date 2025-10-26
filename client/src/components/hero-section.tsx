@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
+import { Link } from "wouter";
 import heroImage from "@assets/generated_images/Career_planning_hero_image_54d30d5b.png";
 
 export function HeroSection() {
@@ -30,19 +31,24 @@ export function HeroSection() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button
-              size="lg"
-              className="bg-primary/90 backdrop-blur-md border border-primary-border hover-elevate active-elevate-2"
-              data-testid="button-start-simulation"
-            >
-              Mulai Simulasi Gratis
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
+            <Link href="/simulation">
+              <Button
+                size="lg"
+                className="bg-primary/90 backdrop-blur-md border border-primary-border hover-elevate active-elevate-2 w-full sm:w-auto"
+                data-testid="button-start-simulation"
+              >
+                Mulai Simulasi Gratis
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
             <Button
               size="lg"
               variant="outline"
               className="bg-white/10 backdrop-blur-md border-white/30 text-white hover-elevate active-elevate-2"
               data-testid="button-learn-more"
+              onClick={() => {
+                document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
+              }}
             >
               Pelajari Lebih Lanjut
             </Button>
