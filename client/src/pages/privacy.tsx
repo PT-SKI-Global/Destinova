@@ -90,7 +90,7 @@ export default function Privacy() {
               </p>
               <p className="mt-4 font-semibold">
                 PT. Sentra Karya Integrasi Global<br />
-                Email: privacy@destinova.id
+                Email: inkspiredpublished@gmail.com
               </p>
             </CardContent>
           </Card>
