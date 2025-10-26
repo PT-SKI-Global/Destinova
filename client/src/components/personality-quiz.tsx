@@ -37,10 +37,19 @@ const questions = [
   },
 ];
 
+interface PersonalityResult {
+  mbtiType: string;
+  description: string;
+  strengths: string[];
+  careerFit: string[];
+}
+
 export function PersonalityQuiz() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [showResult, setShowResult] = useState(false);
+  const [result, setResult] = useState<PersonalityResult | null>(null);
+  const [isCalculating, setIsCalculating] = useState(false);
 
   const progress = ((currentQuestion + 1) / questions.length) * 100;
 
@@ -48,12 +57,53 @@ export function PersonalityQuiz() {
     setAnswers({ ...answers, [currentQuestion]: value });
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
-      setShowResult(true);
-      console.log("Quiz completed with answers:", answers);
+      // Calculate MBTI type from backend
+      setIsCalculating(true);
+      try {
+        // Include all answers including the current one
+        const allAnswers = { ...answers };
+        
+        const quizAnswers = Object.entries(allAnswers).map(([questionId, value]) => ({
+          questionId: parseInt(questionId),
+          value
+        }));
+
+        if (quizAnswers.length !== questions.length) {
+          throw new Error("Please answer all questions");
+        }
+
+        const response = await fetch("/api/personality/calculate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ answers: quizAnswers })
+        });
+
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.error || "Failed to calculate personality");
+        }
+
+        const data = await response.json();
+        setResult(data);
+        setShowResult(true);
+      } catch (error) {
+        console.error("Error calculating personality:", error);
+        alert(error instanceof Error ? error.message : "Gagal menghitung tipe kepribadian");
+        // Fallback to default result
+        setResult({
+          mbtiType: "INTJ",
+          description: "The Architect - Strategic, analytical, and independent thinker.",
+          strengths: ["Analytical thinking", "Strategic planning"],
+          careerFit: ["Software Developer", "Engineer"]
+        });
+        setShowResult(true);
+      } finally {
+        setIsCalculating(false);
+      }
     }
   };
 
@@ -63,7 +113,7 @@ export function PersonalityQuiz() {
     }
   };
 
-  if (showResult) {
+  if (showResult && result) {
     return (
       <Card className="max-w-2xl mx-auto">
         <CardHeader>
@@ -71,20 +121,42 @@ export function PersonalityQuiz() {
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="p-6 bg-primary/10 rounded-lg">
-            <div className="text-center">
-              <div className="text-4xl font-bold text-primary mb-2">INTJ</div>
-              <p className="text-lg font-medium mb-4">The Architect</p>
-              <p className="text-muted-foreground leading-relaxed">
-                Anda adalah pemikir strategis dengan kemampuan analitis yang kuat. Cocok untuk karier di bidang teknologi, engineering, atau konsultasi strategis.
-              </p>
+            <div className="text-center space-y-4">
+              <div className="text-5xl font-bold text-primary">{result.mbtiType}</div>
+              <p className="text-lg font-medium">{result.description}</p>
+              
+              <div className="mt-6 space-y-4">
+                <div>
+                  <h4 className="font-semibold mb-2">Kekuatan Anda:</h4>
+                  <div className="flex flex-wrap gap-2 justify-center">
+                    {result.strengths.map((strength, i) => (
+                      <span key={i} className="px-3 py-1 bg-background rounded-full text-sm">
+                        {strength}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                
+                <div>
+                  <h4 className="font-semibold mb-2">Karier yang Cocok:</h4>
+                  <div className="flex flex-wrap gap-2 justify-center">
+                    {result.careerFit.map((career, i) => (
+                      <span key={i} className="px-3 py-1 bg-primary/20 rounded-full text-sm">
+                        {career}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <Button
             className="w-full"
             size="lg"
             data-testid="button-view-recommendations"
+            onClick={() => window.location.href = "/simulation"}
           >
-            Lihat Rekomendasi Karier
+            Buat Simulasi Karier
           </Button>
         </CardContent>
       </Card>
@@ -118,7 +190,10 @@ export function PersonalityQuiz() {
                 <div
                   key={option.value}
                   className="flex items-center space-x-3 p-4 rounded-lg border hover-elevate active-elevate-2 cursor-pointer"
-                  onClick={() => handleAnswer(option.value)}
+                  onClick={() => {
+                    handleAnswer(option.value);
+                    // If this is the last question and Next button will be enabled, give user time to review
+                  }}
                   data-testid={`radio-option-${option.value}`}
                 >
                   <RadioGroupItem value={option.value} id={option.value} />
@@ -143,10 +218,10 @@ export function PersonalityQuiz() {
         </Button>
         <Button
           onClick={handleNext}
-          disabled={!answers[currentQuestion]}
+          disabled={!answers[currentQuestion] || isCalculating}
           data-testid="button-next"
         >
-          {currentQuestion === questions.length - 1 ? "Lihat Hasil" : "Selanjutnya"}
+          {isCalculating ? "Menghitung..." : currentQuestion === questions.length - 1 ? "Lihat Hasil" : "Selanjutnya"}
           <ChevronRight className="h-4 w-4 ml-2" />
         </Button>
       </CardFooter>

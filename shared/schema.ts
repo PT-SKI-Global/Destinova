@@ -20,7 +20,7 @@ export type User = typeof users.$inferSelect;
 // User profiles with personality and preferences
 export const profiles = pgTable("profiles", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  userId: varchar("user_id").references(() => users.id),
+  userId: varchar("user_id"), // nullable for guest users
   name: text("name").notNull(),
   jungianType: text("jungian_type"), // MBTI type
   education: text("education"), // Current education level
@@ -41,7 +41,7 @@ export type Profile = typeof profiles.$inferSelect;
 // Simulations/scenarios created by users
 export const simulations = pgTable("simulations", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  userId: varchar("user_id").references(() => users.id),
+  userId: varchar("user_id"), // nullable for guest users
   title: text("title").notNull(),
   type: text("type").notNull(), // education, training, career, financial
   inputs: jsonb("inputs").notNull(), // user inputs for the simulation

@@ -15,9 +15,81 @@ export function SimulationForm() {
     notes: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Generating simulation with:", formData);
+    setIsGenerating(true);
+
+    try {
+      const response = await fetch("/api/simulations/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          education: formData.education,
+          careerGoal: formData.careerGoal,
+          decision: formData.decision,
+          notes: formData.notes,
+          jungianType: "INTJ" // TODO: Get from user profile
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to generate simulation");
+      }
+
+      const result = await response.json();
+      console.log("Simulation generated:", result);
+      
+      // Save the simulation
+      try {
+        const saveResponse = await fetch("/api/simulations", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: "guest-user", // TODO: Get from auth
+            title: `${formData.decision} - ${formData.careerGoal}`,
+            type: formData.decision,
+            inputs: {
+              education: formData.education,
+              careerGoal: formData.careerGoal,
+              notes: formData.notes
+            },
+            aiScenario: result.aiScenario,
+            actionPlan: result.actionPlan,
+            metrics: result.metrics,
+            careerPaths: result.careerPaths
+          })
+        });
+
+        if (!saveResponse.ok) {
+          const errorData = await saveResponse.json();
+          throw new Error(errorData.error || "Failed to save simulation");
+        }
+
+        const savedSimulation = await saveResponse.json();
+        console.log("Simulation saved:", savedSimulation);
+        
+        // Show success with results
+        alert(`✓ Simulasi berhasil dibuat dan disimpan!\n\nFit Score: ${result.metrics.fitScore}%\nEstimasi Gaji: ${result.metrics.salary}\n\nLihat console untuk detail lengkap.`);
+        
+        // Reset form
+        setFormData({
+          education: "",
+          careerGoal: "",
+          decision: "",
+          notes: "",
+        });
+      } catch (saveError) {
+        console.error("Failed to save simulation:", saveError);
+        alert(`⚠ Simulasi dibuat tapi gagal disimpan.\n\nFit Score: ${result.metrics.fitScore}%\nEstimasi Gaji: ${result.metrics.salary}\n\nError: ${saveError instanceof Error ? saveError.message : "Unknown error"}`);
+      }
+    } catch (error) {
+      console.error("Error generating simulation:", error);
+      alert("Gagal membuat simulasi. Silakan coba lagi.");
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   return (
@@ -97,10 +169,11 @@ export function SimulationForm() {
             type="submit"
             size="lg"
             className="w-full"
+            disabled={isGenerating}
             data-testid="button-generate-simulation"
           >
             <Sparkles className="h-5 w-5 mr-2" />
-            Generate Simulasi dengan AI
+            {isGenerating ? "Generating..." : "Generate Simulasi dengan AI"}
           </Button>
         </CardFooter>
       </form>
