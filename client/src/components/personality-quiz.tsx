@@ -7,32 +7,136 @@ import { Progress } from "@/components/ui/progress";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 
 const questions = [
+  // E/I - Extraversion vs Introversion
   {
-    question: "Ketika menghadapi masalah baru, Anda lebih suka:",
+    dimension: "E/I",
+    question: "Di lingkungan sosial, Anda lebih merasa energik ketika:",
     options: [
-      { value: "analyze", label: "Menganalisis data dan fakta secara mendalam" },
-      { value: "intuition", label: "Mengikuti intuisi dan pola yang Anda lihat" },
+      { value: "E", label: "Berinteraksi dengan banyak orang dan berada di tengah keramaian" },
+      { value: "I", label: "Mengobrol mendalam dengan satu atau dua orang saja" },
     ],
   },
   {
-    question: "Di lingkungan kerja, Anda lebih energik ketika:",
+    dimension: "E/I",
+    question: "Setelah hari yang melelahkan, Anda lebih suka:",
     options: [
-      { value: "team", label: "Bekerja dengan tim dan berdiskusi" },
-      { value: "alone", label: "Bekerja sendiri dengan fokus mendalam" },
+      { value: "E", label: "Keluar bertemu teman untuk refresh pikiran" },
+      { value: "I", label: "Sendiri di rumah untuk mengisi ulang energi" },
     ],
   },
   {
-    question: "Saat membuat keputusan penting, Anda lebih mengandalkan:",
+    dimension: "E/I",
+    question: "Dalam diskusi kelompok, Anda cenderung:",
     options: [
-      { value: "logic", label: "Logika dan analisis objektif" },
-      { value: "values", label: "Nilai-nilai dan dampak pada orang lain" },
+      { value: "E", label: "Aktif berbicara dan berbagi ide dengan spontan" },
+      { value: "I", label: "Mendengarkan dulu, berpikir, baru berbicara" },
     ],
   },
   {
-    question: "Anda lebih nyaman dengan:",
+    dimension: "E/I",
+    question: "Anda lebih suka bekerja:",
     options: [
-      { value: "structured", label: "Rencana terstruktur dan jadwal yang jelas" },
-      { value: "flexible", label: "Fleksibilitas dan spontanitas" },
+      { value: "E", label: "Dalam tim dengan interaksi konstan" },
+      { value: "I", label: "Sendiri dengan fokus mendalam" },
+    ],
+  },
+  // S/N - Sensing vs Intuition
+  {
+    dimension: "S/N",
+    question: "Ketika belajar sesuatu yang baru, Anda lebih fokus pada:",
+    options: [
+      { value: "S", label: "Fakta, detail, dan instruksi step-by-step yang jelas" },
+      { value: "N", label: "Konsep besar, pola, dan kemungkinan masa depan" },
+    ],
+  },
+  {
+    dimension: "S/N",
+    question: "Dalam menghadapi masalah, Anda lebih mengandalkan:",
+    options: [
+      { value: "S", label: "Pengalaman masa lalu dan metode yang sudah terbukti" },
+      { value: "N", label: "Intuisi dan mencoba pendekatan baru yang kreatif" },
+    ],
+  },
+  {
+    dimension: "S/N",
+    question: "Anda lebih tertarik pada:",
+    options: [
+      { value: "S", label: "Hal-hal praktis dan aplikasi real-world yang konkret" },
+      { value: "N", label: "Teori, ide abstrak, dan kemungkinan di masa depan" },
+    ],
+  },
+  {
+    dimension: "S/N",
+    question: "Saat membaca atau mendengar, Anda lebih memperhatikan:",
+    options: [
+      { value: "S", label: "Detail spesifik dan fakta akurat" },
+      { value: "N", label: "Makna keseluruhan dan implikasi lebih luas" },
+    ],
+  },
+  // T/F - Thinking vs Feeling
+  {
+    dimension: "T/F",
+    question: "Saat membuat keputusan penting, prioritas utama Anda:",
+    options: [
+      { value: "T", label: "Logika, analisis objektif, dan efisiensi" },
+      { value: "F", label: "Nilai-nilai, empati, dan dampak pada orang lain" },
+    ],
+  },
+  {
+    dimension: "T/F",
+    question: "Dalam menyelesaikan konflik, Anda lebih menekankan:",
+    options: [
+      { value: "T", label: "Keadilan dan standar yang objektif" },
+      { value: "F", label: "Harmoni dan perasaan semua pihak" },
+    ],
+  },
+  {
+    dimension: "T/F",
+    question: "Orang lain sering menilai Anda sebagai:",
+    options: [
+      { value: "T", label: "Logis, objektif, dan langsung to-the-point" },
+      { value: "F", label: "Empatik, hangat, dan memahami perasaan" },
+    ],
+  },
+  {
+    dimension: "T/F",
+    question: "Dalam memberikan kritik, Anda cenderung:",
+    options: [
+      { value: "T", label: "Langsung dan fokus pada fakta/kesalahan" },
+      { value: "F", label: "Menjaga perasaan dan membungkus dengan lembut" },
+    ],
+  },
+  // J/P - Judging vs Perceiving
+  {
+    dimension: "J/P",
+    question: "Dalam mengerjakan proyek, Anda lebih suka:",
+    options: [
+      { value: "J", label: "Membuat rencana detail dan deadline yang jelas sejak awal" },
+      { value: "P", label: "Fleksibel, spontan, dan menyesuaikan sambil jalan" },
+    ],
+  },
+  {
+    dimension: "J/P",
+    question: "Ruang kerja/kamar Anda cenderung:",
+    options: [
+      { value: "J", label: "Terorganisir rapi dengan sistem yang jelas" },
+      { value: "P", label: "Kreatif berantakan, tapi Anda tahu di mana sesuatu berada" },
+    ],
+  },
+  {
+    dimension: "J/P",
+    question: "Saat berlibur, Anda lebih nyaman dengan:",
+    options: [
+      { value: "J", label: "Itinerary yang terencana dengan baik" },
+      { value: "P", label: "Pergi tanpa rencana pasti dan lihat apa yang terjadi" },
+    ],
+  },
+  {
+    dimension: "J/P",
+    question: "Anda merasa paling produktif ketika:",
+    options: [
+      { value: "J", label: "Punya jadwal terstruktur dan checklist yang clear" },
+      { value: "P", label: "Bebas mengeksplorasi dan beradaptasi sesuai mood" },
     ],
   },
 ];
