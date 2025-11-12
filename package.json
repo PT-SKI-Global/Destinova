@@ -7,8 +7,16 @@
     "dev": "NODE_ENV=development tsx server/index.ts",
     "build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
     "start": "NODE_ENV=production node dist/index.js",
+    "setup": "npm run build && npm run db:push && npm run db:migrate && npm run check",
     "check": "tsc",
-    "db:push": "drizzle-kit push"
+    "db:push": "drizzle-kit push:pg",
+    "db:seed": "ts-node scripts/seed.ts",
+    "db:shell": "ssh isprastika@10.240.183.128 'sudo docker exec -it destinova-db psql -U postgres -d destinova'",
+    "db:migrate": "npx prisma migrate dev",
+    "db:pull": "npx prisma db pull"
+  },
+  "prisma": {
+    "schema": "./prisma/schema.prisma"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -49,6 +57,7 @@
     "cmdk": "^1.1.1",
     "connect-pg-simple": "^10.0.0",
     "date-fns": "^3.6.0",
+    "dotenv": "^17.2.3",
     "drizzle-orm": "^0.39.1",
     "drizzle-zod": "^0.7.0",
     "embla-carousel-react": "^8.6.0",
@@ -97,9 +106,10 @@
     "@types/ws": "^8.5.13",
     "@vitejs/plugin-react": "^4.7.0",
     "autoprefixer": "^10.4.20",
-    "drizzle-kit": "^0.18.1",
+    "drizzle-kit": "^0.21.4",
     "esbuild": "^0.25.0",
     "postcss": "^8.4.47",
+    "prisma": "^6.19.0",
     "tailwindcss": "^3.4.17",
     "tsx": "^4.20.5",
     "typescript": "5.6.3",
@@ -107,5 +117,17 @@
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.8"
-  }
+  },
+  "description": "**AI-Powered Career & Education Decision Simulation Platform**",
+  "main": "postcss.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PT-SKI-Global/Destinova.git"
+  },
+  "keywords": [],
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/PT-SKI-Global/Destinova/issues"
+  },
+  "homepage": "https://github.com/PT-SKI-Global/Destinova#readme"
 }
